@@ -1,4 +1,9 @@
-from django.http import HttpResponse
+# views.py
+from django.http import JsonResponse
 
 def hello(request):
-    return HttpResponse("Hello, world!")
+    data = [
+        {"id": 1, "name": "Alice"},
+        {"id": 2, "name": "Bob"}
+    ]
+    return JsonResponse(data, safe=False)
