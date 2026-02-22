@@ -1,0 +1,16 @@
+[
+    {
+      "model": "myapp.person",
+      "pk": 1,
+      "fields": {
+        "name": "John Doe"
+      }
+    },
+    {
+      "model": "myapp.person",
+      "pk": 2,
+      "fields": {
+        "name": "Jane Doe"
+      }
+    }
+  ]
