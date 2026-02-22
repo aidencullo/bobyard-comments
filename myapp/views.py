@@ -1,4 +1,6 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
+from .models import Person
 
 def hello(request):
-    return HttpResponse("Hello World")
+    data = list(Person.objects.values("id", "name"))
+    return JsonResponse(data, safe=False)
