@@ -1,4 +1,8 @@
 from django.db import models
 
-class Person(models.Model):
-    name = models.CharField(max_length=100)
+class Comment(models.Model):
+    author = models.CharField(max_length=100)
+    text = models.TextField()
+    date = models.DateTimeField()
+    likes = models.IntegerField(default=0)
+    image = models.URLField(blank=True)

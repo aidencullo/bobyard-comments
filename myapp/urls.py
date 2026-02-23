@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import hello
+from .views import comments_list
 
 urlpatterns = [
-    path('', hello),
+    path('', comments_list),
 ]
