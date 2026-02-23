@@ -1,33 +1,47 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect } from 'react';
 import './App.css'
 
+interface Comment {
+  id: number;
+  author: string;
+  text: string;
+  date: string;
+  likes: number;
+  image: string;
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect((): void => {
+    const fetchComments = async (): Promise<void> => {
+      try {
+        const res: Response = await fetch("http://localhost:8000/");
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data: Comment[] = await res.json();
+        setComments(data);
+      } catch (err) {
+        setError((err as Error).message);
+      }
+    };
+
+    fetchComments();
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {error && <div>{error}</div>}
+      {comments.map((comment) => (
+        <div key={comment.id}>
+          <h3>{comment.author}</h3>
+          <p>{comment.text}</p>
+          <p>{comment.date}</p>
+          <p>{comment.likes}</p>
+          <img src={comment.image} alt={comment.author} />
+        </div>
+      ))}
     </>
   )
 }
